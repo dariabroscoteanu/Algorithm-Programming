@@ -1,0 +1,42 @@
+#depozitele sortate dupa stoc, in caz de egalitate dupa numar de produse, in caz de egalitate -dupa nume depozit
+
+ls1=["Nume",[["kinder",5],["mere",7]]]
+ls2=["Prenume2",[["Paine",2],["mere",10],["pixuri",5]]]
+ls3=["Programare",[["stilou",4],["radiera",6],["mere",2]]]
+ls4=["Algoritmi",[["stilou",4],["radiera",5],["mere",3]]]
+
+lista=[ls1,ls2,ls3,ls4]
+
+def cheie(ls):
+    suma=0
+    for i in ls[1]:
+        suma+=i[1]
+    return (suma,len(ls[1]),ls[0])
+
+copielista=sorted(lista,key=cheie)
+print(copielista)
+
+import functools
+def comparator(ls1,ls2):
+    suma1 = 0
+    for i in ls1[1]:
+        suma1 += i[1]
+    suma2 = 0
+    for i in ls2[1]:
+        suma2 += i[1]
+    if suma1<suma2:
+        return -1
+    if suma1>suma2:
+        return 1
+    if len(ls1[1])>len(ls2[1]):
+        return 1
+    if len(ls1[1])<len(ls2[1]):
+        return -1
+    if ls1[0]>ls2[0]:
+        return 1
+    if ls1[0]<ls2[0]:
+        return -1
+    return 0
+
+lista.sort(key=functools.cmp_to_key(comparator))
+print(lista)

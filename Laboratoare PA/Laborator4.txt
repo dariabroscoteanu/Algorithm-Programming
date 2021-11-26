@@ -1,0 +1,427 @@
+#3. Se citesc din fișierul “puncte.in” informații despre puncte în plan: cele două coordonate
+#(numere întregi) și eticheta (care poate fi un șir ce conține și spatii). Mai exact, structura
+#fișierului este următoarea: pe fiecare linie a fișierului sunt date informațiile despre un punct:
+#doua coordonate întregi si eticheta punctului.
+#1 2 punctul 1
+#1 3 punctul 2
+#2 5 punctul 3
+#1 2 punctul 1 nou
+#4 1 punctul 4
+
+f=open("puncte.in","r")
+p=f.readline()
+d=dict()
+while p!="":
+    a,b,c=p.split(maxsplit=2)
+    c=c.rstrip("\n")
+    p=f.readline()
+    t=(int(a),int(b))
+    d[t]=c
+print(d)
+
+f.close()
+#Asupra punctelor din fișier se fac operațiile codificate in fișierul “interogari.in” astfel: pe
+#fiecare linie se dau doua numere reprezentând coordonatele unui punct si o valoare din
+#mulțimea {1,0} cu semnificația interogare (1)/ștergere(0).
+#1 2 1
+#2 4 1
+#1 2 0
+#1 3 0
+#4 1 1
+#10 20 1
+#20 40 0
+#Ca rezultat al operațiilor se va crea fișierul interogari.out în care în dreptul punctelor cu 1 se
+#va scrie eticheta (sau mesajul nu exista), iar la final se va afișa mesajul: “punctele ramase” și
+#apoi vor afișa punctele rămase după ștergerea punctelor cu 0 (sub forma (x,y): eticheta). Dacă
+#un punct apare de mai multe ori în puncte.in se păstrează ultima(variante:prima/toate)
+#etichetă asociată lui.
+f=open("interogari.in","r")
+g=open("interogari.out","w")
+p=f.readline()
+while p!='':
+    a,b,c=p.split()
+    x=int(a)
+    y=int(b)
+    t=(x,y)
+    if c == '1':
+        if t in d:
+            g.write(f"({int(a)},{int(b)}): {d[t]}\n")
+        else:
+            g.write(f"({int(a)},{int(b)}): nu exista\n")
+    else:
+        d.pop(t,"nu exista")
+    p=f.readline()
+g.write("puncte ramase\n")
+for x in d:#dupa chei
+    g.write(f"{x}: {d[x]}\n")
+for x in d.items():
+    g.write(f"{x[0]}: {x[1]}\n")
+
+g.close()
+f.close()
+
+
+
+
+#4. a) Scrieți o funcție care, dat numele unui fișier, determină și returnează frecvența
+#caracterelor din fișier
+
+
+def frec(s):
+    d=dict()
+    for c in s:
+        if c in d:
+            d[c]+=1
+        else:
+            d[c]=1
+
+    return d
+
+#b) Se consideră fișierele caractere1.in si caractere2.in. Să se afișeze pentru fiecare fișier
+#frecvența caracterelor.
+
+f=open("caractere1.in","r")
+p=f.readline()
+print(frec(p))
+f.close()
+f=open("caractere2.in","r")
+p=f.readline()
+print(frec(p))
+f.close()
+
+#c) Să se afișeze caracterele comune celor două fișiere și frecvența cu care se repetă în ambele
+#fișiere (se vor afișa întâi caracterele alfanumerice ordonate crescător, apoi celelalte).
+
+d = {}
+b = {}
+s1 = set()
+s2 = set()
+nr1 = set()
+nr2 = set()
+
+
+def caractere(nume, d, s1, nr1):
+    with open(nume) as f:
+        for i in f.readline():
+            d.setdefault(i, 0)
+            d[i] += 1
+            if not i.isalpha():
+                nr1.add(i)
+            else:
+                s1.add(i)
+
+
+nume = input()
+caractere(nume, d, s1, nr1)
+nume = input()
+caractere(nume, b, s2, nr2)
+print(d, b, sep="\n")
+c = sorted(s1 & s2)
+n = sorted(nr1 & nr2)
+print(c)
+for i in c:
+    print(i, "frecventa 1:", d[i], "frecventa 2:", b[i], sep=" ")
+for i in n:
+    print(i, "frecventa 1:", d[i], "frecventa 2:", b[i], sep=" ")
+
+
+
+
+#5. Se citesc de la tastatură două numere naturale n și m.
+#a) Să se scrie în fișierul matrice.in o matrice cu n linii și m coloane cu elemente mai mici
+#decât 100 generate aleator (fără a o memora). – modulul random (metodele randint,choice)
+#https://docs.python.org/3/library/random.html
+
+from random import randint
+n=int(input())
+m=int(input())
+g=open("matrice1.in","w")
+#5
+for i in range(n):
+    for j in range(m):
+        g.write(str(randint(1,100)))
+        g.write(" ")
+    g.write("\n")
+
+g.close()
+
+
+
+#b) Se citește din fișierul matrice.in matricea generata la a). Să se genereze în memorie li să se
+#scrie în fișierul matrice.out transpusa matricei și matricea obținută din matricea inițială
+#ordonând crescător elementele de pe ultima coloana prin interschimbări de linii.
+
+f=open("matrice1.in","r")
+linie=f.readline()
+a=[]
+while linie!='':
+    b=[int(x) for x in linie.split()]
+    a.append(b)
+    linie=f.readline()
+f.close()
+
+c=[[0 for x in range(n)]for j in range(m)]
+for i in range(n):
+    for j in range(m):
+        c[j][i]=a[i][j]
+g=open("matrice1.out","w")
+g.write("transpusa este\n")
+for i in range(m):
+    for j in range(n):
+        g.write(f"{c[i][j]} ")
+    g.write('\n')
+g.write("\n")
+g.write("matricea ordonata\n")
+for i in range(n-1):
+    for j in range(i+1,n):
+        if a[i][m-1]>a[i+1][m-1]:
+            a[i],a[i+1]=a[i+1],a[i]
+for i in range(n):
+    for j in range(m):
+        g.write(f"{a[i][j]} ")
+    g.write('\n')
+g.close()
+
+
+
+#6. Se dă un fișier cu cuvinte separate prin spatii. Scrieți un program care să determine
+#grupurile de cuvinte din fișier care au aceleași litere (nu neapărat cu aceeași frecvență).
+#Numele fișierului de intrare se va citi de la tastatură, iar grupurile formate din cel puțin două
+#cuvinte se vor scrie în fișierul text “litere.txt”, câte un grup pe o linie. Cuvintele din fiecare
+#grup vor fi sortate după lungime, iar în caz de lungimi egale, lexicografic.
+
+
+d=dict()
+
+f=open("litere.txt")
+p=f.readline()
+while p!='':
+    for x in p.split():
+        p = set(x)
+        t = sorted(p)
+        rez = ""
+        for y in t:
+            rez = rez + y
+        if rez in d:
+            d[rez].append(x)
+        else:
+            d[rez]=[]
+            d[rez].append(x)
+    p=f.readline()
+f.close()
+for x in d:
+    print(d[x])
+
+
+#2. În fișierul "elevi.in" sunt memorate informații despre elevii unei clase; astfel, pe o linie a
+#fișierului se dau următoarele informații despre un elev: cnp, nume (fără spații), prenume (fără
+#spații), lista de note (maxim 5).
+#a)Memorați lista de elevi din fișier astfel încât să se poată răspundă cât mai eficient la întrebări
+#de tipul: dat cnp elev, care sunt numele, notele.
+#b) ) Scrieți o funcție care primește ca parametri un cnp și informațiile despre elevi memorate
+#la a) și crește cu 1 prima notă a elevului. Funcția returnează nota după modificare sau None
+#dacă cnp-ul nu există. Apelați funcția pentru un cnp citit de la tastatură
+#c) Scrieți o funcție care primește ca parametri un cnp și informațiile despre elevi memorate la
+#a) și șterge informațiile despre elevul cu acest cnp. Apelați funcția pentru un cnp citit de la
+#tastatură (dacă cnp-ul nu este în listă funcția nu va modifica nimic și nu va da eroare)
+#d) Folosind memorarea de la a (nu citind din nou datele) construiți în memorie o lista cu perechi
+#(nume, lista de note) cu elevii din fișier, ordonata după medie și, în caz de egalitate, după nume.
+#5234 Ion Ionica 10 8 2 9
+#1789 Mihail Marius 10 10 10
+#8923 Ionescu Maria 4 5 8 7
+#1789 Radulescu Matei 10 10
+
+f=open("elevi.in")
+l=[]
+d=dict()
+line=f.readline()
+while line!="":
+    cnp=""
+    nume=""
+    note=[]
+    nr=0
+    a=[]
+    for x in line.split():
+        #print(x)
+        if nr==0:
+            cnp=x
+        elif nr==1:
+            nume=x
+        elif nr==2:
+            nume = nume + " " + x
+        else:
+            note.append(int(x))
+        nr=nr+1
+    a.append(nume)
+    a.append(note)
+    d[cnp]=a
+    line=f.readline()
+f.close()
+print(d)
+
+def fct(s,d):
+    if not s in d:
+        return None
+    else:
+        #print(d[s][1])
+        nota=d[s][1][0]+1
+        return nota
+def sterge(s,d):
+    if not s in d:
+        return d
+    else:
+        del d[s]
+        return d
+s=input()
+print(fct(s,d))
+print(sterge(s,d))
+lista=[]
+#print(d)
+for x in d:
+    nume=d[x][0]
+    note=d[x][1]
+    nr = 0
+    sum = 0
+    for y in note:
+        nr = nr + 1
+        sum = sum + y
+    med = sum / nr
+    li=[]
+    li.append(nume)
+    li.append(note)
+    li.append(med)
+    lista.append(li)
+print(lista)
+for i in range(len(lista)):
+    for j in range(i+1,len(lista)):
+        if lista[i][2]>lista[j][2]:
+            lista[i],lista[j]=lista[j],lista[i]
+        else:
+            if lista[i][2] == lista[j][2]:
+                if lista[i][0]>lista[j][0]:
+                    lista[i], lista[j] = lista[j], lista[i]
+print(lista)
+
+
+
+#3. În fișierul text “test.in” se află testul unui elev de clasa a II-a la matematică, conținând 9
+#înmulțiri scrise pe rânduri distincte. Un calcul corect este notat cu un punct, iar unul incorect
+#cu 0 puncte. Să se realizeze un program care să evalueze testul dat, astfel: în dreptul fiecărui
+#calcul corect se va scrie mesajul ‘Corect’, iar în dreptul fiecărui calcul greșit se va scrie mesajul
+#‘Gresit’ și rezultatul corect, iar la final se va scrie nota (un punct se acordă din oficiu!).
+#Rezultatul evaluării testului se va scrie în fișierul text “test.out”.
+
+f=open("test.in","r")
+linie=f.readline()
+s=0
+while linie!="":
+    #print(linie)
+    a,b=linie.split("*")
+    #print(a,b)
+    c,d=b.split("=")
+    a=int(a)
+    c=int(c)
+    d=int(d)
+    if a*c==d:
+        print(f"{a}*{c}={d} Corect")
+        s=s+1
+    else:
+        print(f"{a}*{c}={d} Gresit {a*c}")
+    linie=f.readline()
+print(f"Nota {s+1}")
+f.close()
+
+
+#4. Scrieți un program care să determine grupurile de cuvinte dintr-un fișier text care p-rimează
+#între ele = au aceleași ultime p-litere (p citit de la tastatura). Numele fișierului de intrare se va
+#citi de la tastatură, iar grupurile formate din cel puțin două cuvinte distincte se vor scrie în
+#fișierul text “rime.txt”, câte un grup pe o linie. Cuvintele din fiecare grup vor fi sortate alfabetic.
+
+g=open("rime.txt","w")
+s=input()
+d=dict()
+p=int(input())
+for x in s.split():
+    l=len(x)
+    rima=x[l-p:l]
+    if rima in d:
+        d[rima].append(x)
+    else:
+        list=[]
+        list.append(x)
+        d[rima]=list
+
+def crt(s):
+    return s
+for x in d:
+    list=[]
+    list=d[x]
+    l=sorted(list,key=None)
+    d[x]=l
+print(d)
+g.close()
+
+
+#5. În fișierul text “date.in” sunt memorate, pe linii, numele și prenumele studenților dintr-o
+#grupă. Să se scrie un program care să genereze conturile de email ale studenților și parolele
+#temporare, după care să le salveze în fișierul text “date.out”. Contul de email al unui student
+#va fi de forma prenume.nume@s.unibuc.ro, iar parola temporară va fi de forma o literă mare,
+#3 litere mici și 4 cifre.
+#Pentru genearerea de numere/litere aleatoare – modulul random (metodele randint,choice)
+#date.in
+#Bobocea Andrei
+#Marinescu Ciprian
+#Vasile Dragos
+#date.out
+#andrei.bobocea@s.unibuc.ro,Wadf2133
+#ciprian.marinescu@s.unibuc.ro,Qsdd2111
+#dragos.vasile@s.unibuc.ro,Bbyt7690
+
+f = open("date.in")
+from random import randint
+
+linie = f.readline()
+s = "@s.unibuc.ro"
+while linie != "":
+    nume, prenume = linie.split()
+    nume = nume.lower()
+    prenume = prenume.lower()
+    parola = ""
+    numere = ""
+    c1 = chr(ord('A') + randint(0, 25))
+    mici = ""
+    for i in range(0, 3):
+        mici = mici + chr(ord('a') + randint(0, 25))
+
+    for i in range(0, 4):
+        numere = numere + chr(ord('0') + randint(0, 9))
+    parola = c1 + mici + numere
+    nume = nume + "." + prenume
+    mail = nume + s + " " + parola
+    print(mail)
+
+    linie = f.readline()
+f.close()
+
+
+
+#6. Scrieți o funcție “negative_pozitive” care primește ca parametru o lista de numere întregi și
+#returnează două liste, prima formată din numerele strict negative din lista primită ca parametru
+#și a doua formată din cele strict pozitive. Scrieți un program care citește de la tastatură numele
+#unui fișier text și apoi, folosind apeluri utile ale funcției “negative_pozitive” scrie la sfârșitul
+#fișierului text, pe două linii separate, numerele strict negative, respectiv cele strict pozitive,
+#ordonate crescător 
+def negative_pozitive(list):
+    n=[]
+    p=[]
+    for x in list:
+        if x%2==0:
+            p.append(x)
+        else:
+            n.append(x)
+    return p,n
+
+s=input()
+l=[int(x) for x in s.split()]
+p,n=negative_pozitive(l)
+print(p,n)

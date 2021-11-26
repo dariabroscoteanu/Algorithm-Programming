@@ -1,0 +1,80 @@
+def dfs(nodCurent, nivel):
+    global nod
+    vizitat[nodCurent] = True
+    if nodCurent == nod:
+        return nivel
+
+
+    for i in d[nodCurent]:
+        if vizitat[i]==False:
+            rezultat = dfs(i, nivel + 1)
+            if rezultat != None :
+                return rezultat
+
+
+
+fin = open("arb.in", "r")
+n = int(fin.readline())
+d = dict()
+"""try :
+    print( d[2] )
+except Exception:
+    print( " Nu exista cheie")"""
+for i in range(1, n + 1):
+    d[i] = []
+# print(d)
+
+for i in fin:
+    a, b = [int(j) for j in i.split()]
+    d[a].append(b)
+    d[b].append(a)
+print(d)
+fin.close()
+nod = 5
+vizitat = [False for i in range(n+1)]
+
+
+print(dfs(1,0))
+fin.close()
+
+
+
+
+def dfs(nodCurent, nivel,tata):
+    global nod
+   # vizitat[nodCurent] = True
+    if nodCurent == nod:
+        return nivel
+
+
+    for i in d[nodCurent]:
+        if i != tata:
+            rezultat = dfs(i, nivel + 1)
+            if rezultat != None :
+                return rezultat
+
+
+
+fin = open("arb.in", "r")
+n = int(fin.readline())
+d = dict()
+"""try :
+    print( d[2] )
+except Exception:
+    print( " Nu exista cheie")"""
+for i in range(1, n + 1):
+    d[i] = []
+# print(d)
+
+for i in fin:
+    a, b = [int(j) for j in i.split()]
+    d[a].append(b)
+    d[b].append(a)
+print(d)
+fin.close()
+nod = 5
+#vizitat = [False for i in range(n+1)]
+
+
+print(dfs(1,0,0))
+fin.close()

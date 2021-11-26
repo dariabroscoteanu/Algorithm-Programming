@@ -1,0 +1,63 @@
+x=int(input("x="))
+y=int(input("y="))
+x=x^y
+y=x^y
+x=x^y
+print(x,y)
+
+
+x=int(input("x="))
+if x&(x-1)==0:
+    k=0
+    while x>0:
+        k=k+1
+        x=x>>1
+    print(x&(x-1)==0,k-1)
+else:
+    print(x&(x-1)==0)
+
+
+
+n=int(input("n="))
+print("introduceti sirul")
+i=0
+r=0
+while i<n:
+    x=int(input())
+    r=r^x
+    i=i+1
+print(r)
+
+
+x=int(input("x="))
+inv=0
+aux=x
+while x>0:
+    c=x%10
+    x=x//10
+    inv=inv*10+c
+if inv==aux:
+    print("Da")
+else:
+    print("Nu")
+
+
+x=int(input("x="))
+y=int(input("y="))
+r=x%y
+while r>0:
+    x=y
+    y=r
+    r=x%y
+print(y)
+
+
+x=int(input("x="))
+n=int(input("n="))
+y=1<<n
+y=y-1
+y=y&x
+x=x>>n
+x=x<<(n-1)
+x=x|y
+print(x)

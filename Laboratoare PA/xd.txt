@@ -1,0 +1,17 @@
+s=input()
+l=[int(x) for x in s.split()]
+print(l)
+def divide(li,ls):
+    if li==ls:
+        return l[li]
+    else:
+        mij=(li+ls)//2
+        s1=divide(li,mij)
+        s2=divide(mij+1,ls)
+        if s1>s2:
+            return s1
+        else:
+            return s2
+n=len(l)-1
+ma=divide(0,n)
+print(ma)

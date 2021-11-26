@@ -1,0 +1,115 @@
+a=int(input("a="))
+b=int(input("b="))
+if a>b:
+    a,b=b,a
+x=0
+y=1
+z=1
+while z<=b:
+    x=y
+    y=z
+    z=x+y
+print(y)
+
+
+s=int(input("s="))
+v=[40,30,10,1]
+i=0
+nr=0
+while s>0 and i<4:
+    if s>=v[i]:
+        s=s-v[i]
+        nr=nr+1
+    else:
+        if nr>0:
+            print(nr,end=" ")
+        i=i+1
+        nr=0
+
+if nr>0:
+    print(nr,end=" ")
+
+
+
+
+
+n=int(input("n="))
+v=[0]*10
+while n>0:
+    c=n%10
+    n=n//10
+    v[c]=v[c]+1
+nr=0
+for i in range(9,0,-1):
+    for k in range(0,v[i]):
+        nr=nr*10+i
+print(nr)
+
+
+n=int(input("n="))
+v=[0]*10
+while n>0:
+    c=n%10
+    n=n//10
+    v[c]=v[c]+1
+nr=0
+for i in range(1,9):
+    if v[i]>0:
+        nr=nr*10+i
+        v[i]=v[i]-1
+        break
+for i in range(0,9):
+    for k in range(0,v[i]):
+        nr=nr*10+i
+
+
+print(nr)
+
+
+n=int(input("n="))
+a=[0]*(n+1)
+
+for i in range(0,n):
+    a[i]=int(input())
+
+m=int(input("m="))
+b=[0]*(m+1)
+for i in range(0,m):
+    b[i]=int(input())
+c=[0]*(n+m+1)
+d=[0]*(n+m+1)
+i=0
+j=0
+k=0
+t=0
+while i<n and j<m:
+    if a[i]==b[j]:
+        if c[k]!=a[i]:
+            k = k + 1
+            c[k]=a[i]
+
+        t = t + 1
+        d[t] = a[i]
+        i = i + 1
+        j = j + 1
+    if a[i]<b[j]:
+        k=k+1
+        c[k]=a[i]
+        i=i+1
+    else:
+            k=k+1
+            c[k]=b[j]
+            j=j+1
+while i<n:
+    k = k + 1
+    c[k] = a[i]
+    i = i + 1
+while j<m:
+    k = k + 1
+    c[k] = b[j]
+    j = j + 1
+for i in range(1,k+1):
+    print(c[i],end=" ")
+print()
+for i in range(1,t+1):
+    print(d[i],end=" ")

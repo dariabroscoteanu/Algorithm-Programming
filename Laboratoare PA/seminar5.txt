@@ -1,0 +1,343 @@
+#1. a) Scrieți o funcție care primește 2 parametri m, n și returnează o matrice mxn cu
+#elemente numere naturale <100 generate aleator.
+#b) Scrieți o funcție care afișează o matrice globală numita a
+#c) Scrieți o funcție care primește ca parametru o matrice și o modifica ordonând-o
+#descrescător după ultima coloana (prin interschimbare de linii)
+#Exemplu apeluri:
+#a = gen_matrice(4,3)
+#print_matrice()
+#ordoneaza(a)
+#print_matrice()
+
+from random import randint
+n=int(input())
+m=int(input())
+def gen_matrice(m,n):
+    a=[[randint(1,99) for i in range(m)] for j in range(n)]
+    return a
+
+a=gen_matrice(m,n)
+print(a)
+
+def print_matrice():
+    global a
+    for line in a:
+        for x in line:
+            print(f"{x:3}",end=" ")
+        print()
+
+print_matrice()
+
+def ordoneaza(a):
+    a.sort(key=lambda linie:linie[-1],reverse=True)
+print()
+ordoneaza(a)
+print_matrice()
+
+
+
+
+
+#2. a) Scrieți o funcție care primește un număr întreg x și un număr variabil de liste nevide de
+#numere întregi și returnează numărul de liste primite ca parametru care conțin x.
+#Exemplu apel:
+#nr = liste_x(3, [1, 5, 7], [3], [1, 8, 3], [])
+#print(nr)
+
+def liste_x(x,*l):
+    nr=0
+    for list in l:
+        if x in list:
+            nr=nr+1
+    return nr
+
+nr = liste_x(3, [1, 5, 7], [3], [1, 8, 3], [])
+print(nr)
+
+#b) Modificați funcția de la a astfel încât rezultatul să nu fie returnat, ci să se salveze în
+#variabila globală rez. Exemplu apel:
+#rez = None
+#liste_x(3, [1, 5, 7], [3], [1, 8, 3], [4,3])
+#print(rez)
+
+def liste_x1(x,*l):
+    global rez
+    rez=0
+    for line in l:
+        if x in line:
+            rez=rez+1
+rez=0
+liste_x1(3, [1, 5, 7], [3], [1, 8, 3], [4,3])
+print(rez)
+
+
+#c) Modificați funcția de la a astfel încât sa returneze primele 3 liste primite ca parametru care
+#conțin x (sau liste vide dacă nu există). Exemplu apel:
+#t = liste_x(3,[1,5,7],[3],[1,8,3],[2])
+#print(t)
+#x,y,z = liste_x(3,[1,5,7],[3],[1,8,3],[2,3],[4])
+#print(x,y)
+
+def liste_x2(x,*l):
+    rez=[[] for x in range(3)]
+    i=0
+    for line in l:
+        if x in line:
+            rez[i]=line
+            i=i+1
+            if i>2:
+                break
+    return rez
+
+t = liste_x2(3,[1,5,7],[3],[1,8,3],[2])
+print(t)
+x,y,z = liste_x2(3,[1,5,7],[3],[1,8,3],[2,3],[4])
+print(x,y,z)
+
+
+
+#3. Se dă un dicționar d care conține informații de forma
+#cod_student=[grupa,nume,lista_note]
+#(cheia este un cod asociat unui student, iar valoarea este o lista conținând următoarele
+#informații despre student: grupa, nume, lista note). Un exemplu de astfel de dicționar este:
+#d={1:[242,"Ana",[10,4,7]],2:[241,"Ioana",[10,10,9]],3:[241,"Ion",[10,10,7]]
+#,4:[242,"Matei",[10,5,9]]}
+
+
+#a) Scrieți o funcție care primește ca parametru un dicționar de forma celui descris și
+#returnează o listă cu informațiile despre studenți cu elemente de forma
+#[grupa, nume, lista note]
+#ordonata după grupă, în caz de egalitate descrescător după media notelor, iar în caz de
+#egalitate după nume. Exemplu de apel:
+#print(lista_grupe(d))
+
+f=open("date.in")
+s=f.readline()
+d=dict()
+while s!="":
+    x,y,z,*t=s.split()
+    for i in range(len(t)):
+        t[i]=int(t[i])
+    l=[int(y),z,t]
+    d[x]=l
+    s=f.readline()
+f.close()
+print(d)
+def lista_grupe(d):
+    l=[]
+    for x in d.keys():
+        a=[d[x][0],d[x][1],d[x][2]]
+        l.append(a)
+    #print(l)
+    l.sort(key=lambda e: (e[0],-sum(e[2])/len(e[2]),e[1]))
+    return l
+t=lista_grupe(d)
+print(t)
+
+#b) Scrieți o funcție care primește ca parametru un dicționar de forma celui descris și
+# adaugă la începutul listei de informații asociate unui student un cod de lungime generat aleator
+# care conține 3 litere urmate de 3 cifre. Exemplu de apel:
+#genereaza_coduri(d)
+#print(d)
+
+import random,string
+letters=string.ascii_letters
+digits=string.digits
+def cod():
+    return "".join(random.choices(letters,k=3))+"".join(random.choices(digits,k=3))
+
+def genereaza_coduri(d):
+    for x in d.values():
+        cd=cod()
+        x.insert(0,cd)
+
+genereaza_coduri(d)
+print(d)
+
+
+
+#4. a) Scrieți o funcție care primește ca parametru un
+# număr n și o funcție f și calculează suma
+#suma i=1,...,n din f(i). Daca f nu este specificat se va calcula suma i=1,...,n din i.
+#Parametrul f va fi (obligatoriu) specificat prin nume
+
+
+
+def suma(n,*,f=None): #f(1)+f(2)+....+f(n)
+    if f is None:
+        return n*(n+1)/2
+    s=0
+    for i in range(n+1):
+        s=s+f(i)
+    return s
+print(suma(10))
+from math import sqrt
+print(suma(10,f=sqrt))
+
+#b) Scrieți o funcție care primește ca parametri un număr variabil de numere
+# x1,..,xn și o funcție f și calculează suma (suma i=1,...,n din f(xi)).
+# Dacă f nu este specificat se va calcula suma i=1,...,n din xi.
+
+def functie(*l, f=int):
+    s=0
+    for x in l:
+        s=s+f(x)
+    return s
+
+print(functie(1,3,4,5))
+l=[-3, 4, 8]
+print(functie(*l,f=abs))
+
+
+
+
+#tema
+#1. a) Scrieți o funcție cu număr variabil de parametri care să furnizeze numărul natural obținut prin
+# alipirea cifrelor maxime ale numerelor naturale nenule primite ca parametri.
+#De exemplu, pentru numerele 4251, 73, 8 și 133 funcția trebuie să returneze numărul 5783.
+
+def cifMaxima(x):
+    x=str(x)
+    c=max(x)
+    return int(c)
+
+def numar(*l):
+    nr=0
+    for x in l:
+        c=cifMaxima(x)
+        nr=nr*10+c
+    return nr
+
+print(numar(4251, 73, 8, 133 ))
+
+#b) Scrieți o funcție cu 3 parametri nenuli de tip întreg a,b și c care să verifice dacă aceștia pot fi considerați
+# ca fiind numere scrise în baza 2 sau nu, folosind apeluri utile ale funcției definite anterior.
+# De exemplu, pentru numerele 1001, 11 și 100 funcția trebuie să returneze valoarea True,
+# iar pentru numerele 1001, 17 și 100 trebuie să returneze valoarea False.
+
+def functie(a,b,c):
+    n=numar(a,b,c)
+    c=numar(n)
+    if c<2:
+        return True
+    else:
+        return False
+
+print(functie(1001,11,100))
+print(functie(1001,17,100))
+
+
+
+
+
+def cauta(cuv,*numeFisiere):
+    g=open("date.out","w")
+    for nume in numeFisiere:
+        g.write(f"{nume}:")
+        f=open(nume,"r")
+        s=f.readline()
+        nr=1
+        ok=0
+        while s!="":
+            #daca il cautam ca si cuvant
+            # if cuv in s.split():
+            # a=" "+s+" "
+            # b=" "+cuv+" "
+            # if b in a:
+            if cuv in s:
+                ok=1
+                g.write(str(nr))
+                g.write(" ")
+            nr=nr+1
+            s=f.readline()
+        if ok==1:
+            g.write('\n')
+        else:
+            g.write("nu exista\n")
+        f.close()
+    g.close()
+cuv=input()
+cauta(cuv,"date.in","date1.in")
+
+
+
+#3. Fișierul text “angajati.txt” conține pe fiecare linie numele, vârsta și salariului câte unui angajat,
+# despărțite prin virgule. Scrieți un program care să încarce datele din fișierul text în memorie și să afișeze următoarele informații:
+
+f=open("angajati.txt","r")
+l=[]
+s=f.readline()
+while s!="":
+    name, age, salary=s.split()
+    t=[name, int(age), int(salary)]
+    l.append(t)
+    s=f.readline()
+
+f.close()
+
+print(l)
+
+#a) informațiile despre un angajat al cărui nume se citește de la tastatură (pe ecran);
+def a(name):
+    t=[l[p][0] for p in range(len(l))]
+    if  name in t:
+        p=t.index(name)
+        print(p)
+        print(f"angajatul {name}, {l[p][1]} ani, are salariu de {l[p][2]} lei.")
+
+a("Avram")
+
+
+#b) salariul maxim și numele angajaților care au salariul respectiv (pe ecran);
+
+def b():
+    s=[l[p][2] for p in range(len(l))]
+    ma=max(s)
+    p=0
+    u=len(l)
+    while ma in s[p:u]:
+        poz=s.index(ma)
+        print(l[poz][0])
+        p=poz+1
+b()
+
+#c) salariul mediu din firmă (pe ecran);
+
+def c():
+    s = [l[p][2] for p in range(len(l))]
+    suma=sum(s)
+    return suma/len(s)
+
+print(c())
+
+#d) angajații sortați alfabetic după nume (în fișierul text “angajati_nume.txt”);
+
+def d():
+    g=open("angajati_nume.txt","w")
+    l.sort(key = lambda e: e[0])
+    for i in range(len(l)):
+        g.write(f"{l[i][0]} {str(l[i][1])} {str(l[i][2])}\n")
+    g.close()
+d()
+
+
+#e) angajații sortați descrescător după vârstă și apoi alfabetic după nume (în fișierul text “angajati_varsta_nume.txt”);
+def e():
+    g = open("angajati_varsta_nume.txt", "w")
+    l.sort(key=lambda e: (-e[1],e[0]))
+    for i in range(len(l)):
+        g.write(f"{l[i][0]} {str(l[i][1])} {str(l[i][2])}\n")
+    g.close()
+e()
+
+#f) angajații sortați descrescător după salariu, apoi crescător după vârstă (în fișierul text “angajati_salariu_varsta.txt”).
+
+
+def f():
+    g = open("angajati_salariu_varsta.txt", "w")
+    l.sort(key=lambda e: (-e[2], e[1]))
+    for i in range(len(l)):
+        g.write(f"{l[i][0]} {str(l[i][1])} {str(l[i][2])}\n")
+    g.close()
+
+f()

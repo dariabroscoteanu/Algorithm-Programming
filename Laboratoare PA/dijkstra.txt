@@ -1,0 +1,53 @@
+#include <fstream>
+#define infinit (1LL*1000000000*1000000000)
+using namespace std;
+ifstream f("dijkstra.in");
+ofstream g("dijkstra.out");
+long long d[101],b[101][101],dist,cost,maxim;
+int a[101][101],x,n,m,i,k,nod,y,p,u,c[100001];
+bool viz[101];
+int main()
+{
+    f>>n>>k>>m>>maxim;
+    for(i=1;i<=m;++i)
+    {
+        f>>x>>y>>cost;
+        ++a[x][0];
+        a[x][a[x][0]]=y;
+        ++a[y][0];
+        a[y][a[y][0]]=x;
+        b[x][y]=cost;
+        b[y][x]=cost;
+    }
+    for(i=1;i<=n;++i)
+        d[i]=infinit;
+    p=u=1;
+    c[p]=k;
+    d[k]=0;
+    viz[k]=1;
+    while(p<=u)
+    {
+        x=c[p];
+        dist=d[x];
+        viz[x]=0;
+        ++p;
+        for(i=1;i<=a[x][0];++i)
+        {
+            nod=a[x][i];
+            if(dist+b[x][nod]<d[nod])
+            {
+                d[nod]=dist+b[x][nod];
+                if(viz[nod]==0)
+                {++u;
+                c[u]=nod;
+                viz[nod]=1;
+                }
+            }
+        }
+    }
+    for(i=1;i<=n;++i)
+        if(d[i]<=maxim)
+            g<<i<<" ";
+
+    return 0;
+}

@@ -1,0 +1,32 @@
+f=open("date.in")
+n=int(f.readline())
+s=f.readline()
+l=[(int(x),0,0) for x in s.split()]
+print(l)
+x=l[0][0]
+l[0]=(x,1,-1)
+for i in range(1,n):
+    ma=0
+    poz=-1
+    for j in range(0,i):
+        x=l[j][0]
+        y=l[j][1]
+        if y>ma and x<l[i][0]:
+            ma=y
+            poz=j
+    t=(l[i][0],ma+1,poz)
+    l[i]=t
+print(l)
+ma=0
+poz=-1
+for i in range(n):
+    if l[i][1]>ma:
+        ma=l[i][1]
+        poz=i
+print(ma)
+def afis(poz,ma):
+    if ma>=1:
+        afis(l[poz][2],ma-1)
+        print(poz,end=" ")
+afis(poz,ma)
+f.close()

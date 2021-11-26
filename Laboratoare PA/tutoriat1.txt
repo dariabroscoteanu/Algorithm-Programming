@@ -1,0 +1,43 @@
+'''Se citesc de la tastatura n (natural pozitiv, >3) si n
+numere intregi care se vor stoca intr-o lista.
+Afisati cele mai mici 3 numere citite.'''
+
+n=int(input())
+s=input()
+s=[int(x) for x in s.split()]
+mi1=9999
+mi2=9998
+mi3=9997
+for i in range(0,len(s)):
+    if s[i]<mi3:
+        mi1=mi2
+        mi2=mi3
+        mi3=s[i]
+    else:
+        if s[i]<mi2:
+            mi=mi2
+            mi2=s[i]
+        else:
+            if s[i]<mi1:
+                mi1=s[i]
+print(mi3,mi2,mi1,sep=" ")
+
+
+
+'''Se citesc de la tastatura n (natural pozitiv, >3) si n
+numere intregi care se vor stoca intr-o lista.
+Afisati cele mai mici 3 numere citite.'''
+def anagrame(s, t):
+    if len(s)!=len(t):
+        return False
+    else:
+        s=sorted(s)
+        t=sorted(t)
+        for i in range(0,len(s)):
+            if s[i]!=t[i]:
+                return  False
+    return True
+
+s=input()
+t=input()
+print(anagrame(s,t))

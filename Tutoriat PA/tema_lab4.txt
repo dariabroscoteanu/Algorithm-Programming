@@ -1,0 +1,386 @@
+#from random import random
+from random import randint
+n=int(input())
+m=int(input())
+g=open("matrice1.in","w")
+#5
+for i in range(n):
+    for j in range(m):
+        g.write(str(randint(1,n*m)))
+        g.write(" ")
+    g.write("\n")
+
+g.close()
+
+f=open("matrice1.in","r")
+linie=f.readline()
+a=[]
+while linie!='':
+    b=[int(x) for x in linie.split()]
+    a.append(b)
+    linie=f.readline()
+f.close()
+
+#b=[]
+
+c=[[0 for x in range(n)]for j in range(m)]
+for i in range(n):
+    for j in range(m):
+        c[j][i]=a[i][j]
+g=open("matrice1.out","w")
+g.write("transpusa este\n")
+for i in range(m):
+    for j in range(n):
+        g.write(f"{c[i][j]} ")
+    g.write('\n')
+g.write("\n")
+g.write("matricea ordonata\n")
+for i in range(n-1):
+    for j in range(i+1,n):
+        if a[i][m-1]>a[i+1][m-1]:
+            a[i],a[i+1]=a[i+1],a[i]
+for i in range(n):
+    for j in range(m):
+        g.write(f"{a[i][j]} ")
+    g.write('\n')
+g.close()
+
+
+#6
+def frecventa(s):
+    d=dict()
+    for x in s:
+        if x in d:
+            d[x]+=1
+        else:
+            d[x]=1
+    return d
+
+def verif(d1,d2):
+    for x in d1:
+        if not x in d2:
+            return False
+    return True
+def cheie(p):
+    return (len(p),p)
+f=open("fisier.in","r")
+l=f.readline()
+list=[]
+while l!="":
+    li=[x for x in l.split()]
+    list=list+li
+    l=f.readline()
+f.close()
+v=[0 for i in range(len(list))]
+i=0
+while i<len(list):
+    v[i]=1
+    j=i+1
+    nr=1
+    ok=0
+    l=[]
+    l.append(list[i])
+    while j<len(list):
+        if verif(list[i],list[j]) and v[j]==0:
+            v[j]=1
+            l.append(list[j])
+            nr=nr+1
+            ok=1
+        j=j+1
+
+    #print(l)
+    if ok==1:
+        print(sorted(l,key=cheie))
+    i = i + 1
+
+
+
+#7
+def frecv(s):
+    d=dict()
+    f=open(s,"r")
+    line=f.readline()
+    while line!="":
+        for x in line.split():
+            if x in d:
+                d[x]+=1
+            else:
+                d[x]=1
+        line=f.readline()
+    f.close()
+    return d
+from math import sqrt
+def union2(dict1, dict2):
+    return dict(list(dict1.items()) + list(dict2.items()))
+
+d1=frecv("caractere1.in")
+d2=frecv("caractere2.in")
+
+ma=-1
+s=""
+
+for x in d1:
+    if d1[x]>ma:
+        ma=d1[x]
+        s=x
+    else:
+        if d1[x]==ma:
+            if s<x:
+                s=x
+print(s)
+
+
+d=union2(d1,d2)
+print(d)
+sum=0
+
+nr1=1
+nr2=2
+for i in range(len(d)):
+    k1=1
+    k2=1
+    if i in d1:
+        k1 = d1[i]
+    if i in d2:
+        k2 = d2[i]
+    nr1=nr1+k1*k1
+    nr2=nr2+k2*k2
+nr1=sqrt(nr1)
+nr2=sqrt(nr2)
+
+for i in range(len(d)):
+    k1=0
+    k2=0
+    if i in d1:
+        k1=d1[i]
+    if i in d2:
+        k2=d2[i]
+    sum=sum+k1*k2//(nr1*nr2)
+print(sum)
+
+
+def frecv(s):
+    d=dict()
+    f=open(s,"r")
+    line=f.readline()
+    while line!="":
+        for x in line.split():
+            if x in d:
+                d[x]+=1
+            else:
+                d[x]=1
+        line=f.readline()
+    f.close()
+    return d
+from math import sqrt
+def union2(dict1, dict2):
+    return dict(list(dict1.items()) + list(dict2.items()))
+
+d1=frecv("caractere1.in")
+d2=frecv("caractere2.in")
+
+ma=-1
+s=""
+
+for x in d1:
+    if d1[x]>ma:
+        ma=d1[x]
+        s=x
+    else:
+        if d1[x]==ma:
+            if s<x:
+                s=x
+print(s)
+
+
+d=union2(d1,d2)
+print(d)
+sum=0
+
+nr1=1
+nr2=2
+for i in d:
+    k1=1
+    k2=1
+    if i in d1:
+        k1 = d1[i]
+    if i in d2:
+        k2 = d2[i]
+    nr1=nr1+k1*k1
+    nr2=nr2+k2*k2
+nr1=sqrt(nr1)
+nr2=sqrt(nr2)
+print(nr1,nr2)
+k1=1
+k2=1
+
+for i in d:
+    if i in d1:
+        k1=k1*d1[i]
+    if i in d2:
+        k2=k2*d2[i]
+    #print(k1,k2)
+    sum=sum+k1*k2/(nr1*nr2)
+print(sum)
+
+
+
+f=open("elevi.in")
+l=[]
+d=dict()
+line=f.readline()
+while line!="":
+    cnp=""
+    nume=""
+    note=[]
+    nr=0
+    a=[]
+    for x in line.split():
+        #print(x)
+        if nr==0:
+            cnp=x
+        elif nr==1:
+            nume=x
+        elif nr==2:
+            nume = nume + " " + x
+        else:
+            note.append(int(x))
+        nr=nr+1
+    a.append(nume)
+    a.append(note)
+    d[cnp]=a
+    line=f.readline()
+f.close()
+print(d)
+
+def fct(s,d):
+    if not s in d:
+        return None
+    else:
+        #print(d[s][1])
+        nota=d[s][1][0]+1
+        return nota
+def sterge(s,d):
+    if not s in d:
+        return d
+    else:
+        del d[s]
+        return d
+s=input()
+print(fct(s,d))
+print(sterge(s,d))
+lista=[]
+#print(d)
+for x in d:
+    nume=d[x][0]
+    note=d[x][1]
+    nr = 0
+    sum = 0
+    for y in note:
+        nr = nr + 1
+        sum = sum + y
+    med = sum / nr
+    li=[]
+    li.append(nume)
+    li.append(note)
+    li.append(med)
+    lista.append(li)
+print(lista)
+for i in range(len(lista)):
+    for j in range(i+1,len(lista)):
+        if lista[i][2]>lista[j][2]:
+            lista[i],lista[j]=lista[j],lista[i]
+        else:
+            if lista[i][2] == lista[j][2]:
+                if lista[i][0]>lista[j][0]:
+                    lista[i], lista[j] = lista[j], lista[i]
+print(lista)
+
+
+f=open("test.in","r")
+linie=f.readline()
+while linie!="":
+    #print(linie)
+    a,b=linie.split("*")
+    #print(a,b)
+    c,d=b.split("=")
+    a=int(a)
+    c=int(c)
+    d=int(d)
+    if a*c==d:
+        print(f"{a}*{c}={d} Corect")
+    else:
+        print(f"{a}*{c}={d} Gresit {a*c}")
+    linie=f.readline()
+f.close()
+
+
+f=open("date.in")
+from random import randint
+linie=f.readline()
+s="@s.unibuc.ro"
+while linie!="":
+    nume,prenume=linie.split()
+    nume=nume.lower()
+    prenume=prenume.lower()
+    parola=""
+    numere = ""
+    c1=chr(ord('A')+randint(0,25))
+    mici=""
+    for i in range(0,3):
+        mici=mici+chr(ord('a')+randint(0,25))
+    
+    for i in range(0,4):
+        numere=numere+chr(ord('0')+randint(0,9))
+    parola=c1+mici+numere
+    nume=nume+"."+prenume
+    mail=nume+s+" "+parola
+    print(mail)
+
+    linie=f.readline()
+f.close()
+
+
+def negative_pozitive(list):
+    n=[]
+    p=[]
+    for x in list:
+        if x%2==0:
+            p.append(x)
+        else:
+            n.append(x)
+    return p,n
+
+s=input()
+l=[int(x) for x in s.split()]
+p,n=negative_pozitive(l)
+print(p,n)
+
+
+
+
+
+
+g=open("rime.txt","w")
+s=input()
+d=dict()
+p=int(input())
+for x in s.split():
+    l=len(x)
+    rima=x[l-p:l]
+    if rima in d:
+        d[rima].append(x)
+    else:
+        list=[]
+        list.append(x)
+        d[rima]=list
+
+def crt(s):
+    return s
+for x in d:
+    list=[]
+    list=d[x]
+    l=sorted(list,key=None)
+    d[x]=l
+print(d)
+g.close()

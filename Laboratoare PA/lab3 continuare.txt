@@ -1,0 +1,29 @@
+m=int(input())
+n=int(input())
+a=[]
+for i in range(0,m):
+    b=[]
+    s=input()
+    b=[int(x) for x in s.split()]
+    a.append(b)
+print(a)
+c=[]
+for j in range(0,n):
+    b=[]
+    for i in range(0,m):
+        b.append(a[i][j])
+    c.append(b)
+print(c)
+
+
+
+s=input()
+rez=""
+voc="aeiouAEIOU"
+for i in range(0,len(s)):
+    if voc.find(s[i])!=-1:
+        rez=rez+s[i]+'p'+s[i]
+    else:
+        rez=rez+s[i]
+print(rez)
+

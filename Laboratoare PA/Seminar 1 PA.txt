@@ -1,0 +1,12 @@
+def f(x):
+    nr=0
+    p=1
+    while x:
+        c=x%10
+        x=x//10
+        nr=nr+p*c
+        p=p*2
+    return nr
+print(f(1100))
+
+

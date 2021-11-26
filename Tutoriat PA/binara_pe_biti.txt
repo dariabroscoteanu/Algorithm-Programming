@@ -1,0 +1,19 @@
+from math import log2
+
+
+def cautBin(nr):
+    l2 = int(log2(len(v)))
+    p = 1 << l2
+    poz = 0
+    while p > 0:
+        if poz + p < len(v) and v[poz + p] <= nr:
+            poz += p
+        p = p // 2
+    if v[poz] == nr:
+        return poz
+    else:
+        return False
+
+
+v = [int(x) for x in input().split()]
+print(cautBin(3))

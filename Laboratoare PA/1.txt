@@ -1,0 +1,32 @@
+#6. Maximizarea profitului cu respectarea termenelor limită Se consideră o mulţime
+#e n activităţi care trebuie planificate pentru a folosi o aceeaşi resursă.
+# Această resursă poate fi folosită de o singură activitate la un moment dat.
+# Toate activităţile au aceeaşi durată (să presupunem 1).
+# Pentru fiecare activitate i se cunosc termenul limită până la care se poate executa ti
+# (raportat la ora de început 0, 1  ti  n) şi profitul pi care se primeşte dacă activitatea
+# i se execută la timp (cu respectarea termenului limită).
+# Să se determine o submulţime de activităţi care se pot planifica astfel încât profitul total obţinut să fie maxim.
+
+
+
+
+f = open("date.in","r")
+n = int(f.readline())
+lista = list()
+for i in range(n):
+    ls = f.readline()
+    ls = ls.split()
+    lista.append([int(ls[0]),int(ls[1]),int(i+1)])
+f.close()
+lista.sort(key = lambda e: -e[1])
+import heapq
+h = list()
+t = n*[None]
+j = 0
+for i in range(n,0,-1):
+    while j < n and lista[j][1] == i:
+        heapq.heappush(h, (-lista[j][0], lista[j][2]))
+        j += 1
+    if len(h) > 0:
+        t[i-1] = heapq.heappop(h)[1]
+print(t)

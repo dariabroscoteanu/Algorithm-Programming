@@ -1,0 +1,57 @@
+import math
+a=int(input("a="))
+b=int(input("b="))
+c=int(input("c="))
+d=b*b-4*a*c
+if d<0:
+    print("Nu exista solutii")
+else:
+    if d==0:
+        print("Solutie unica")
+        x=((-1)*b)//(2*a)
+        print(x)
+    else:
+        x=((-1)*b+math.sqrt(d))//(2*a)
+        y=((-1)*b-math.sqrt(d))//(2*a)
+        print("Doua distincte")
+        print(x,y)
+
+
+
+import math
+a=int(input("a="))
+b=int(input("b="))
+i=b
+ok=0
+while i>=a:
+    d=2
+    while d*d<=i:
+        if i%d==0:
+            break
+        else:
+            d=d+1
+    if d*d>i & i>1:
+        print(i)
+        ok=1
+        break
+    else:
+        i=i-1
+if ok==0:
+    print("Nu exista")
+
+import math
+n=int(input("n="))
+x=float(input())
+i=1
+ma=-1
+while i<n:
+    y=float(input())
+    if x>y:
+        d=x-y
+    else:
+        d=y-x
+    if d>ma:
+        ma=d
+    x=y
+    i=i+1
+print(ma)

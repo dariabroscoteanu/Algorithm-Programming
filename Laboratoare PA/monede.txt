@@ -1,0 +1,15 @@
+suma=24
+n=5
+v=[1,4,5,6,7]
+nr=[-1 for i in range(suma+1)]
+
+def recursie(sum):
+    if nr[sum]!=-1:
+        return nr[sum]
+    if sum<0:
+        return 0
+    altvector=[recursie(sum-v[i]) for i in range(n)]
+    minimul= min(altvector)
+    nr[sum]=minimul+1
+    return nr[sum]
+print(recursie(suma))

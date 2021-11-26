@@ -1,0 +1,139 @@
+s=input()
+tabel=str.maketrans("ac","xy","b")
+s=s.translate(tabel)
+print(s)
+
+
+s="abc .,.; ts :aw"
+tabel=str.maketrans(".,:;","    ")
+s=s.translate(tabel)
+print(s)
+
+
+s="abdefsaaoem"
+vocale="aeiou"
+sirNou=""
+for x in vocale:
+    sirNou=sirNou+chr(ord(x)+1)
+tabel=str.maketrans(vocale,sirNou)
+s=s.translate(tabel)
+print(s)
+
+
+s="abdefsa.: a... :,oem"
+vocale="aeiou"
+sirNou=""
+for x in vocale:
+    sirNou=sirNou+chr(ord(x)+1)
+tabel=str.maketrans(vocale,sirNou,",.:")
+s=s.translate(tabel)
+print(s)
+
+
+s="avem 1 ora de curs 2 de seminar 3 de lab"
+cifre="1234"
+d={"1":"unu","2":"doi","3":"trei","4":"patru"}
+tabel=str.maketrans(d)
+s=s.translate(tabel)
+print(s)
+
+
+s=input()
+t=input()
+l1=[int(x) for x in s.split()]
+l2=[int(x) for x in t.split()]
+l1[0:len(l1):2]=l2[0:len(l2):2]
+print(l1)
+
+
+s=input()
+ls1=s.split()
+for i in range(len(ls1)):
+    ls1[i]=int(ls1[i])
+s=input()
+ls2=[int(x) for x in s.split()]
+n=len(ls1)
+#ls1[0:n:2]=ls2[0:n:2]
+ls1[::2]=ls2[::2]
+print(ls1)
+
+
+s=input()
+l1=[int(x) for x in s.split()]
+p1=p2=-1
+for x in range(0,len(l1)):
+    if l1[x]==0:
+        if p1==-1:
+            p1=p2=x
+        else:
+            p2=x
+            break
+l1[p1:p2+1]=""
+print(l1)
+
+
+s=input()
+l1=[int(x) for x in s.split()]
+p1=p2=-1
+while l1.count(0):
+    l1.remove(0)
+print(l1)
+
+#sau
+s=input()
+l1=[int(x) for x in s.split()]
+try:
+    p = l1.index(0)
+    while True:
+        l1.pop(p)
+        p=l1.index(0,p)
+except ValueError:
+    pass
+print(l1)
+
+
+
+s=input()
+l1=[int(x) for x in s.split()]
+k=int(input())
+mi=999
+for i in range(0,len(l1)-k):
+    suma=sum(l1[i:i+k+1])
+    if suma<mi:
+        mi=suma
+        t=i
+l1[t:t+k+1]=""
+print(l1)
+
+
+s = input()
+s = [int(x) for x in s.split()]
+'''
+try:
+   s.remove(100)
+except ValueError:
+   print("100 nu e in lista")
+except IndexError:
+   pass
+s1 = [x for x in s if x != 0]
+print(s1)
+'''
+#p = s.index(200)
+#print(p)
+try:
+   p = s.index(0)
+   while True:
+      s.pop(p)
+      p = s.index(0,p)
+      #print(p)
+except :
+   pass
+print(s)
+
+'''
+while 0 in s:
+   s.remove(0)
+print(s)
+'''
+
+

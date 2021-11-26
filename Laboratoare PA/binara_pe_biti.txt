@@ -1,0 +1,34 @@
+#include <iostream>
+int n,v[101],i,x;
+using namespace std;
+int cautBinar(int x)
+{
+    int ls=0,aux=n;
+    int p;
+    while(aux)
+    {
+        aux=aux>>1;
+        ++ls;
+    }
+    p=1<<ls;
+    int poz=0;
+    while (p > 0)
+    {
+        if (poz + p < n && v[poz + p] <= x)
+            poz += p;
+        p = p >> 1;
+    }
+    if  (v[poz] == x)
+        return poz;
+else
+        return 0;
+}
+int main()
+{
+    cin>>n;
+    for(i=1; i<=n; ++i)
+        cin>>v[i];
+    cin>>x;
+    cout<<cautBinar(x);
+    return 0;
+}

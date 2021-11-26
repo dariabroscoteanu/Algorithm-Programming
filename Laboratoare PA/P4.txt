@@ -1,0 +1,118 @@
+#4.Spiridușii lui Moș Crăciun au fiecare asociat câte un cod format din litere și cifre.
+# Până în luna noiembrie spiridușii au avut la dispoziție un fișier în care să completeze ce
+# jucării pot face până la Crăciun și câte bucăți. O linie din acest fișier conține codul spiridușului,
+# numărul de bucăți (număr natural) și numele jucăriei (numele este format din cuvinte separate prin câte un spațiu).
+# Un spiriduș poate adăuga de mai multe ori o linie în fișier, chiar și cu aceeași jucărie, dacă se hotărăște că poate face mai multe.
+#Un exemplu de fișier este:
+
+f=open("date.in")
+s=f.readline()
+d=dict()
+while s!="":
+    a,b,c=s.split(maxsplit=2)
+    print(a,b,c)
+    c=c.rsplit("\n")
+    c=c[0]
+    l=[int(b),c]
+    if a in d.keys():
+        ok=1
+        for x in d[a]:
+            if c==x[1]:
+                x[0]=x[0]+int(b)
+                ok=0
+        if ok==1:
+            d[a].append(l)
+    else:
+        d[a]=[l]
+    s=f.readline()
+f.close()
+print(d)
+
+#b) Dat codul unui spiriduș, care sunt jucăriile care le poate face și ce cantitate din fiecare?
+# Pentru aceasta scrieți o funcție despre_spiridus cu 2 parametri:
+# în primul parametru se transmite structura în care s-au memorat datele la punctul a)
+# iar al doilea este codul unui spiriduș. Funcția  returnează o lista cu elementele tupluri de 2 elemente
+# – primul fiind numele jucăriei, iar al doilea cantitatea – ordonată descrescător după cantitate și, în caz de egalitate,
+# crescător după nume. Apelați funcția pentru codul S1 și afișați lista returnata de funcție.
+# Pentru datele din fișierul exemplu se va afișa [('ponei', 10), ('trenulet', 10), ('papusa', 1)]
+
+def despre_spiridus(d,cod):
+    l=[]
+    for x in d[cod]:
+        jucarie=x[1]
+        cantitate=x[0]
+        t=(jucarie,cantitate)
+        l.append(t)
+    l.sort(key=lambda e:(-e[1],e[0]))
+    return l
+print(despre_spiridus(d,"S1"))
+
+
+#c) Care este mulțimea jucăriilor pe care spiridușii le pot produce?
+# Pentru aceasta scrieți o funcție jucarii care primește ca parametru structura în care s-au
+# memorat datele la punctul a) și returnează o mulțime cu numele jucăriilor care pot fi produse de spiriduși.
+# Apelați funcția și afișați pe ecran elementele mulțimii returnate (pe o linie, separate prin virgula).
+# Pentru datele din fișierul exemplu o posibilă ieșire este (jucăriile se pot afișa în orice ordine):
+# ponei,trenulet,masinuta,papusa
+
+
+def jucarii(d):
+    m=set()
+    for a in d.keys():
+        for x in d[a]:
+            m.add(x[1])
+    return m
+m=jucarii(d)
+for x in m:
+    print(x,end=" ")
+print()
+#d) Care este lista spiridușilor harnici: ordonați descrescător după numărul de jucării
+# diferite pe care le pot face și, în caz de egalitate, descrescător după cantitatea
+# de jucării pe care o vor produce și, în caz de egalitate, crescător după cod?
+# Pentru aceasta scrieți o funcție spiridusi care primește ca parametru structura în care
+# s-au memorat datele și returnează o lista cu elementele tupluri de 3 elemente
+# – primul fiind codul spiridușului,
+# al doilea numărul de jucării diferite pe care le poate produce,
+# iar al treilea numărul total de bucăți de jucării care le poate produce spiridușul
+# – ordonată după criteriile cerute de Moș Crăciun (precizate anterior).
+# Apelați funcția și afișați pe ecran elementele listei obținute,
+# fiecare tuplu din listă fiind afișat pe o linie separată. Pentru datele din fișierul exemplu se va afișa
+
+
+def spiridusi(d):
+    l=[]
+    for x in d.keys():
+        cod=x
+        numar=len(d[x])
+        cantitate=0
+        for x in d[x]:
+            cantitate=cantitate+x[0]
+        t=(cod,numar,cantitate)
+        l.append(t)
+    l.sort(key=lambda e:(-e[1],-e[2],e[0]))
+    return l
+
+l=spiridusi(d)
+for x in l:
+    print(x)
+
+#d) În caz că un spiriduș nu mai poate produce un tip de jucărie,
+# să se actualizeze informațiile asociate spiridușului.
+# Pentru aceasta scrieți o funcție actualizare care primește 3 parametri (în aceasta ordine):
+# structura în care s-au memorat datele, codul spiridușului și numele jucăriei.
+# Dacă spiridușul dat ca parametru produce cel puțin două tipuri de jucării,
+# funcția va șterge din structura de date informațiile despre jucăria cu numele dat ca parametru atașate spiridușului
+# cu codul dat ca parametru și va returna True. Altfel funcția va returna False .
+# Să se apeleze funcția pentru spiridușul cu cod S1 și jucăria trenulet, apoi să se afișeze informațiile rămase despre
+# S1 folosind funcția despre_spiridus de la punctul b. Pentru datele din fișierul exemplu se va afișa [('ponei', 10), ('papusa', 1)]
+
+def actualizare(d,cod,nume):
+    if len(d[cod])<2:
+        return False
+    else:
+        for x in d[cod]:
+            if x[1]==nume:
+                d[cod].remove(x)
+                return True
+print(actualizare(d,"S1","trenulet"))
+print(despre_spiridus(d,"S1"))

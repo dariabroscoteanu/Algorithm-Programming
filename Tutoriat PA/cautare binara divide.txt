@@ -1,0 +1,15 @@
+
+def cautBin(nrCautat,pozStart,pozStop):
+    pozMij=(pozStart+pozStop)//2
+    mij = v[(pozStart+pozStop)//2]
+    if pozStart>pozStop:
+        return False
+    if mij == nrCautat:
+        return True
+    elif mij>nrCautat:
+        return cautBin(nrCautat,pozStart,pozMij-1)
+    else:
+        return cautBin(nrCautat,pozMij+1,pozStop)
+
+v = [int(x) for x in input().split()]
+print(cautBin(7,0,len(v)-1))
